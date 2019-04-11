@@ -1,0 +1,25 @@
+{
+  "name": "reviews-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lodge-io/reviews-proxy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lodge-io/reviews-proxy/issues"
+  },
+  "homepage": "https://github.com/lodge-io/reviews-proxy#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "jquery": "^3.3.1"
+  }
+}
