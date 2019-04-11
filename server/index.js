@@ -1,37 +1,3 @@
-// const express = require('express');
-// const axios = require('axios');
-// const path = require('path');
-// const app = express();
-// const port = process.env.PORT || 3000;
-
-// app.use('/', express.static(path.join(__dirname, '../public')));
-// app.use('/reviews/:id', express.static(path.join(__dirname, '../public')));
-
-// const axios3001 = axios.create({
-//   baseURL: 'http://localhost:3001'
-// })
-
-// const axios3223 = axios.create({
-//   baseURL: 'http://localhost:3223'
-// })
-
-// app.listen(port, () => {
-// console.log(`server running at: http://localhost:${port}`);
-// });
-
-// app.use('/api/reviews/:id', (req, res) => {
-//   axios3001.get(`/api/reviews/${req.params.id}`)
-//   .then(response => res.send(response.data))
-//   .catch(err => res.send(err));
-// }) 
-
-// app.use('/location', (req, res) => {
-//   axios3223.get(`/api/reviews/${req.params.id}`)
-//   .then(response => res.send(response.data))
-//   .catch(err => res.send(err));
-// }) 
-
-
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
@@ -42,22 +8,48 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/listing/:id', express.static(path.join(__dirname, '../public')));
 
-// app.get('/*', (req, res) => {
-//   console.log('hfdsf')
-//   res.sendFile(path.join(__dirname, '../public/index.html'));
-// });
 
 app.listen(port, () => {
   console.log('Running on port:', port);
+});
+
+const nav = axios.create({
+  baseURL: 'http://localhost:3223'
 });
 
 const description = axios.create({
   baseURL: 'http://localhost:3116'
 });
 
+const reviews = axios.create({
+  baseURL: 'http://localhost:3001'
+});
+
+const imageGallery = axios.create({
+  baseURL: 'http://localhost:8000'
+})
+
+app.get('/api/location/:query', (req, res) => {
+  var query = req.params.query;
+  nav.get(`/api/location/${query}`)
+    .then(response => res.json(response.data))
+    .catch(err => res.send(err))
+});
+
 app.get('/api/host/:hostid', (req, res) => {
-  var id = req.params.hostid;
-  description.get(`/api/host/${id}`)
+  description.get(`/api/host/${req.params.hostid}`)
   .then(response => res.json(response.data))
   .catch(err => res.send(err))
+});
+
+app.get('/api/reviews/:id', (req, res) => {
+  reviews.get(`/api/reviews/${req.params.id}`)
+  .then(response => res.send(response.data))
+  .catch(err => res.send(err));
+}) 
+
+app.get('/rooms/:id/', (req, res) => {
+  imageGallery.get(`/rooms/${req.params.id}`)
+    .then(response => res.json(response.data))
+    .catch(err => res.send(err))
 });
